@@ -1,30 +1,33 @@
 import { Button, Flex } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import InputField from '../components/InputField';
-import Wrapper from '../components/Wrapper';
 import { useLoginMutation } from '../generated/graphql';
 import { toErrorMap } from '../utils/toErrorMap';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import { useParamsQuery } from '../utils/useParamsQuery';
+import Layout from '../components/Layout';
 
 const Login = (): JSX.Element => {
   const [{}, login] = useLoginMutation();
   const history = useHistory();
+  const query = useParamsQuery();
+  const next = query.get('next');
   return (
-    <Wrapper variant="small">
+    <Layout variant="small">
       <Formik
         initialValues={{ usernameOrEmail: '', password: '' }}
         onSubmit={async (values, { setErrors }) => {
-          // const response = await login(values);
-          // if (response.data?.login.errors) {
-          //   setErrors(toErrorMap(response.data.login.errors));
-          // } else if (response.data?.login.user) {
-          //   if (typeof router.query.next === 'string') {
-          //     history.push(router.query.next);
-          //   } else {
-          //     history.push('/home');
-          //   }
-          // }
+          const response = await login(values);
+          if (response.data?.login.errors) {
+            setErrors(toErrorMap(response.data.login.errors));
+          } else if (response.data?.login.user) {
+            if (typeof next === 'string') {
+              history.push(next);
+            } else {
+              history.push('/home');
+            }
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -51,7 +54,7 @@ const Login = (): JSX.Element => {
           </Form>
         )}
       </Formik>
-    </Wrapper>
+    </Layout>
   );
 };
 

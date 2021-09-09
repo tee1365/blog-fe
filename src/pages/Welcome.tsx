@@ -7,7 +7,6 @@ import { fetchImage } from '../utils/fetchImage';
 
 const Welcome = (): JSX.Element => {
   let image = window.localStorage.getItem('image');
-  console.log('imageUrl: ' + image);
 
   useEffect(() => {
     (async () => {

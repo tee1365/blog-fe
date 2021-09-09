@@ -1,15 +1,15 @@
 import { Box, Text } from '@chakra-ui/layout';
 import { Button, Flex } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import { fetchImage } from '../utils/fetchImage';
 import { isServer } from '../utils/isServer';
 import ImageBackground from './ImageBackground';
 
 const Navbar = (): JSX.Element => {
+  const history = useHistory();
   let image = window.localStorage.getItem('image');
-  console.log('imageUrl: ' + image);
 
   useEffect(() => {
     (async () => {
@@ -32,24 +32,22 @@ const Navbar = (): JSX.Element => {
     );
   } else if (!data?.me) {
     body = (
-      <>
+      <Box>
         <Link to="/login">
           <Button mr={4}>Login</Button>
         </Link>
         <Link to="/register">
           <Button>Register</Button>
         </Link>
-      </>
+      </Box>
     );
   } else {
     body = (
       <Flex>
-        <Box mr={4}>{data?.me?.username}</Box>
-        <Button
-          variant="link"
-          onClick={() => logout()}
-          isLoading={logoutFetching}
-        >
+        <Box mr={4} color="white">
+          {data?.me?.username}
+        </Box>
+        <Button onClick={() => logout()} isLoading={logoutFetching}>
           Logout
         </Button>
       </Flex>
@@ -71,7 +69,12 @@ const Navbar = (): JSX.Element => {
         {body}
       </Flex>
       <Flex justifyContent="center" mt="auto">
-        <Text fontSize="6xl" color="white" mb={12}>
+        <Text
+          fontSize="6xl"
+          color="white"
+          mb={12}
+          onClick={() => history.push('/home')}
+        >
           Justin's Blog
         </Text>
       </Flex>

@@ -3,35 +3,35 @@ import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import InputField from '../components/InputField';
-import Wrapper from '../components/Wrapper';
+import Layout from '../components/Layout';
 import { useChangePasswordMutation } from '../generated/graphql';
 import { toErrorMap } from '../utils/toErrorMap';
+import { useParamsQuery } from '../utils/useParamsQuery';
 
 const ChangePassword = () => {
   const [, changePassword] = useChangePasswordMutation();
   const [tokenError, setTokenError] = useState('');
   const history = useHistory();
-  const params = useParams();
-  console.log(params);
+  const query = useParamsQuery();
+  const token = query.get('token');
   return (
-    <Wrapper variant="small">
+    <Layout variant="small">
       <Formik
         initialValues={{ newPassword: '' }}
         onSubmit={async (values, { setErrors }) => {
-          // const response = await changePassword({
-          //   newPassword: values.newPassword,
-          //   token:
-          //     typeof router.query.token === 'string' ? router.query.token : '',
-          // });
-          // if (response.data?.changePassword.errors) {
-          //   const errorMap = toErrorMap(response.data.changePassword.errors);
-          //   if ('token' in errorMap) {
-          //     setTokenError(errorMap.token);
-          //   }
-          //   setErrors(errorMap);
-          // } else if (response.data?.changePassword.user) {
-          //   history.push('/home');
-          // }
+          const response = await changePassword({
+            newPassword: values.newPassword,
+            token: typeof token === 'string' ? token : '',
+          });
+          if (response.data?.changePassword.errors) {
+            const errorMap = toErrorMap(response.data.changePassword.errors);
+            if ('token' in errorMap) {
+              setTokenError(errorMap.token);
+            }
+            setErrors(errorMap);
+          } else if (response.data?.changePassword.user) {
+            history.push('/home');
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -56,7 +56,7 @@ const ChangePassword = () => {
           </Form>
         )}
       </Formik>
-    </Wrapper>
+    </Layout>
   );
 };
 
