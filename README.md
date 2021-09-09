@@ -1,46 +1,138 @@
-# Getting Started with Create React App
+# notes
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+react typescript eslint redux-toolkit react-router axios materialUI (graphql)
+.net core entityframework signalR sqlite (graphql)
+cloud deployment
 
-## Available Scripts
+## todos
 
-In the project directory, you can run:
+add back to top and add new article on the right bottom
+learn back end
+graphql
 
-### `npm start`
+## eslint
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[eslint](https://andrebnassis.medium.com/setting-eslint-on-a-react-typescript-project-2021-1190a43ffba)
+npm install eslint --save-dev
+npx eslint --init
+npm install eslint-config-airbnb-typescript --save-dev
+npx install-peerdeps --dev eslint-config-airbnb-typescript
+npm install --save-dev eslint-config-prettier
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## redux toolkit
 
-### `npm test`
+## styled components
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## react router
 
-### `npm run build`
+``` js
+  let history = useHistory();
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  function handleClick() {
+    history.push("/home");
+  }
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## antd customise theme
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+use craco to eject react script and modify webpack
 
-### `npm run eject`
+## problem
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### problem1
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+We don't need to import react to use jsx in react 17, although eslint give errors with import.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### fix1
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```js
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off"
+```
 
-## Learn More
+### problem2
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Parsing error “parserOptions.project” has been set for @typescript-eslint/parser
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### fix2
+
+Add it to the includes in tsconfig.json
+
+```js
+"include": [
+  ".eslintrc.js",
+]
+```
+
+how to get the types of the actions in slice?
+
+## 配置
+
+1. npm init -y 生成package.json
+2. 然后npx tsconfig.json下载ts配置
+3. 安装npm i -D @types/node nodemon ts-node typescript
+4. 创建src/index.ts，随便写点东西
+5. 更改npm script     "start": "nodemon --exec ts-node src/index.ts"
+
+## 配置mikro-orm
+
+1. index写配置
+
+   ```ts
+   const main = async () => {
+     const orm = await MikroORM.init({
+       dbName: 'JustinBlog',
+       debug: !__prod__,
+       type: 'sqlite',
+       entities: [],
+     });
+   };
+   ```
+
+   `export const __prod__ = process.env.NODE_ENV === 'production';`
+2. 创建一个entity
+
+   ```ts
+     @Entity()
+     export class Test {
+       @PrimaryKey()
+       id!: number;
+
+       @Property()
+       title!: string;
+
+       @Property()
+       createdAt: Date = new Date();
+
+       @Property({ onUpdate: () => new Date() })
+       updatedAt: Date = new Date();
+     }
+   ```
+
+3. 把数据格式写进数据库里
+   1. 第一种用cli来migration
+
+      ```shell
+      npx mikro-orm migration:create --initial 第一次
+      npx mikro-orm migration:create 以后
+      ```
+
+      这种在看教程时管用，用的数据库时postgresql。但是这个项目用sqlite的时候只创建了mikro_orm_migrations的table。不创建test表。
+   2. 第二种用schemaGenerator
+
+      `npx mikro-orm schema:update --run`
+
+      这个在和sqlite使用是管用。
+   3. 在index中写在代码里
+
+      ```ts
+      const main = async () => {
+      const orm = await MikroORM.init(mikroOrmConfig);
+      // orm.getMigrator().up(); 好像和下面那个只能用一个
+      orm.getSchemaGenerator().updateSchema();
+      const post = orm.em.create(Test, { title: 'first' });
+      await orm.em.persistAndFlush(post);
+      };
+      ```
+
+4. 安装apollo
