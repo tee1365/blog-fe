@@ -1,7 +1,7 @@
 import { Box, Button, Flex } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import InputField from '../components/InputField';
 import Layout from '../components/Layout';
 import { useChangePasswordMutation } from '../generated/graphql';

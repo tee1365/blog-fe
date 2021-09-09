@@ -5,9 +5,13 @@ import { useCreatePostMutation } from '../generated/graphql';
 import Layout from '../components/Layout';
 import { useIsAuth } from '../utils/useIsAuth';
 import { useHistory } from 'react-router';
+import { useState } from 'react';
+import MDEditor from '@uiw/react-md-editor';
+import { Box } from '@chakra-ui/react';
 
 const CreatePost = (): JSX.Element => {
   const [, createPost] = useCreatePostMutation();
+  const [value, setValue] = useState('**Hello world!!!**');
   const history = useHistory();
   useIsAuth();
   return (
@@ -28,12 +32,15 @@ const CreatePost = (): JSX.Element => {
               placeholder="title"
               label="Title"
             ></InputField>
-            <InputField
+            {/* <InputField
               textarea
               name="text"
               placeholder="text..."
               label="Body"
-            ></InputField>
+            ></InputField> */}
+            <Box mt={4}>
+              <MDEditor value={value} onChange={() => setValue} />
+            </Box>
             <Button type="submit" color="teal" mt={4} isLoading={isSubmitting}>
               Create
             </Button>

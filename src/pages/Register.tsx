@@ -7,7 +7,7 @@ import { useRegisterMutation } from '../generated/graphql';
 import { toErrorMap } from '../utils/toErrorMap';
 
 const Register = (): JSX.Element => {
-  const [{}, register] = useRegisterMutation();
+  const [, register] = useRegisterMutation();
   let history = useHistory();
   return (
     <Layout variant="small">

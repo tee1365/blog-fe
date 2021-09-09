@@ -9,7 +9,7 @@ import { useParamsQuery } from '../utils/useParamsQuery';
 import Layout from '../components/Layout';
 
 const Login = (): JSX.Element => {
-  const [{}, login] = useLoginMutation();
+  const [, login] = useLoginMutation();
   const history = useHistory();
   const query = useParamsQuery();
   const next = query.get('next');
