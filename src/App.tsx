@@ -19,7 +19,7 @@ function App() {
       <Route path="/login" component={Login} />
       <Route path="/forgotPassword" component={ForgotPassword} />
       <Route path="/createPost" component={CreatePost} />
-      <Route path="/changePassword" component={ChangePassword} />
+      <Route path="/changePassword/:token" component={ChangePassword} />
       <Box position="fixed" right="10vh" bottom="10vh">
         <Link to="/create">
           <Button>add</Button>

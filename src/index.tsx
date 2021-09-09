@@ -1,18 +1,24 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import theme from './theme';
-
+import { Router } from 'react-router-dom';
+import { Provider } from 'urql';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import theme from './theme';
+import { client } from './utils/createUrqlClient';
+import { createBrowserHistory } from 'history';
+
+export const history = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider resetCSS theme={theme}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ChakraProvider>
+    <Provider value={client}>
+      <ChakraProvider resetCSS theme={theme}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </ChakraProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

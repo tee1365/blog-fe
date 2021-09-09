@@ -1,18 +1,16 @@
-import { Box, Link, VStack } from '@chakra-ui/layout';
-import { withUrqlClient } from 'next-urql';
-import React from 'react';
+import { Box, VStack } from '@chakra-ui/layout';
 import Layout from '../components/Layout';
 import { usePostsQuery } from '../generated/graphql';
-import { createUrqlClient } from '../utils/createUrqlClient';
-import NextLink from 'next/link';
+import { Button } from '@chakra-ui/button';
+import { Link } from 'react-router-dom';
 
-const Index = (): JSX.Element => {
+const Home = (): JSX.Element => {
   const [{ data }] = usePostsQuery();
   return (
     <Layout>
-      <NextLink href="/createPost">
-        <Link>Create Post</Link>
-      </NextLink>
+      <Link to="/createPost">
+        <Button>Create Post</Button>
+      </Link>
       <br />
       <VStack mt={2} spacing={3}>
         {typeof data === 'undefined'
@@ -23,4 +21,4 @@ const Index = (): JSX.Element => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(Index);
+export default Home;
