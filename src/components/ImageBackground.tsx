@@ -1,20 +1,17 @@
 import { Box, BoxProps } from '@chakra-ui/layout';
-import React, { ReactNode } from 'react';
-import nookies from 'nookies';
-import { GetServerSideProps, NextPage } from 'next';
-import Axios from 'axios';
+import { ReactNode } from 'react';
 
 interface ImageBackgroundProps extends BoxProps {
   image: string;
   children: ReactNode;
 }
 
-const ImageBackground: NextPage<ImageBackgroundProps> = ({
+const ImageBackground = ({
   image,
   children,
   height = '100vh',
   ...boxProps
-}: ImageBackgroundProps) => {
+}: ImageBackgroundProps): JSX.Element => {
   // let image: string | undefined;
   // image = cookies.splashPageImage;
   // console.log('imageUrl: ' + image);
@@ -40,20 +37,20 @@ const ImageBackground: NextPage<ImageBackgroundProps> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { image } = nookies.get(ctx);
-  console.log(image);
-  if (!image) {
-    const imageObj: any = await Axios.get(
-      'https://api.unsplash.com/photos/random?orientation=landscape&client_id=zcZKjKq4URKIvy2gho5nO1Egrh5zEac5f4K3vpLL41s'
-    );
-    const image: string = imageObj.data.urls.regular;
-    nookies.set(ctx, 'image', image, {
-      maxAge: 60 * 60 * 24,
-    });
-  }
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//   const { image } = nookies.get(ctx);
+//   console.log(image);
+//   if (!image) {
+//     const imageObj: any = await Axios.get(
+//       'https://api.unsplash.com/photos/random?orientation=landscape&client_id=zcZKjKq4URKIvy2gho5nO1Egrh5zEac5f4K3vpLL41s'
+//     );
+//     const image: string = imageObj.data.urls.regular;
+//     nookies.set(ctx, 'image', image, {
+//       maxAge: 60 * 60 * 24,
+//     });
+//   }
 
-  return { props: { image } };
-};
+//   return { props: { image } };
+// };
 
 export default ImageBackground;

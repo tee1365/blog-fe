@@ -1,6 +1,6 @@
 import { Box, Text } from '@chakra-ui/layout';
 import { Button, Flex } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import { Link } from 'react-router-dom';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import { isServer } from '../utils/isServer';
 import ImageBackground from './ImageBackground';
@@ -20,12 +20,12 @@ const Navbar = (): JSX.Element => {
   } else if (!data?.me) {
     body = (
       <>
-        <NextLink href="/login">
+        <Link to="/login">
           <Button mr={4}>Login</Button>
-        </NextLink>
-        <NextLink href="/register">
+        </Link>
+        <Link to="/register">
           <Button>Register</Button>
-        </NextLink>
+        </Link>
       </>
     );
   } else {
@@ -52,6 +52,7 @@ const Navbar = (): JSX.Element => {
       zIndex={1}
       height="30vh"
       flexDir="column"
+      image=""
     >
       <Flex ml={'auto'} flexDir="row">
         {body}

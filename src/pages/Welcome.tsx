@@ -10,6 +10,7 @@ const Welcome = (): JSX.Element => {
       flexDir="column"
       alignItems="center"
       justifyContent="center"
+      image=""
     >
       <Text fontSize="100px" color="white" mb={12}>
         Justin's Blog
