@@ -11,7 +11,7 @@ import { Box } from '@chakra-ui/react';
 
 const CreatePost = (): JSX.Element => {
   const [, createPost] = useCreatePostMutation();
-  const [value, setValue] = useState('**Hello world!!!**');
+  const [value, setValue] = useState('');
   const history = useHistory();
   useIsAuth();
   return (
@@ -39,7 +39,16 @@ const CreatePost = (): JSX.Element => {
               label="Body"
             ></InputField> */}
             <Box mt={4}>
-              <MDEditor value={value} onChange={() => setValue} />
+              <MDEditor
+                value={value}
+                onChange={(value) => {
+                  if (value) {
+                    setValue(value);
+                  } else {
+                    setValue('');
+                  }
+                }}
+              />
             </Box>
             <Button type="submit" color="teal" mt={4} isLoading={isSubmitting}>
               Create

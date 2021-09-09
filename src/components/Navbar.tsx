@@ -43,7 +43,7 @@ const Navbar = (): JSX.Element => {
     );
   } else {
     body = (
-      <Flex>
+      <Flex alignItems="center">
         <Box mr={4} color="white">
           {data?.me?.username}
         </Box>
