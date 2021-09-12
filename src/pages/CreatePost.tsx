@@ -35,12 +35,6 @@ const CreatePost = (): JSX.Element => {
               placeholder="title"
               label="Title"
             ></InputField>
-            {/* <InputField
-              textarea
-              name="text"
-              placeholder="text..."
-              label="Body"
-            ></InputField> */}
             <Box mt={4}>
               <MDEditor
                 value={value}

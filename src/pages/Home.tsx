@@ -1,5 +1,5 @@
 import { Box, VStack } from '@chakra-ui/layout';
-import { Heading, LinkBox, LinkOverlay, Text } from '@chakra-ui/react';
+import { Heading, LinkBox, LinkOverlay } from '@chakra-ui/react';
 import MDEditor from '@uiw/react-md-editor';
 import Layout from '../components/Layout';
 import { usePostsQuery } from '../generated/graphql';
@@ -26,7 +26,6 @@ const Home = (): JSX.Element => {
                 <Heading size="md" my="2">
                   <LinkOverlay href="#">{p.title}</LinkOverlay>
                 </Heading>
-                {/* <Text>{p.text}</Text> */}
                 <MDEditor.Markdown source={p.text} />
               </LinkBox>
             ))}
