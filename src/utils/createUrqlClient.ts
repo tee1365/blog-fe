@@ -80,21 +80,21 @@ export const client = createClient({
               }
             );
           },
-          createPost: (_result, args, cache, info) => {
-            betterUpdateQuery<CreatePostMutation, PostsQuery>(
-              cache,
-              {
-                query: PostsDocument,
-              },
-              _result,
-              (result, query) => {
-                query.posts.push(result.createPost);
-                return {
-                  posts: query.posts,
-                };
-              }
-            );
-          },
+          // createPost: (_result, args, cache, info) => {
+          //   betterUpdateQuery<CreatePostMutation, PostsQuery>(
+          //     cache,
+          //     {
+          //       query: PostsDocument,
+          //     },
+          //     _result,
+          //     (result, query) => {
+          //       query.posts.push(result.createPost);
+          //       return {
+          //         posts: query.posts,
+          //       };
+          //     }
+          //   );
+          // },
         },
       },
     }),

@@ -19,7 +19,10 @@ const CreatePost = (): JSX.Element => {
       <Formik
         initialValues={{ title: '', text: '' }}
         onSubmit={async (values) => {
+          values.text = value;
+          console.log(values);
           const { error } = await createPost({ createPostInput: values });
+          console.log(error);
           if (!error) {
             history.push('/home');
           }
