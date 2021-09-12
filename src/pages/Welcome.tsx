@@ -12,7 +12,6 @@ const Welcome = (): JSX.Element => {
     (async () => {
       if (!image) {
         await fetchImage();
-        console.log('running');
       }
     })();
   }, [image]);
