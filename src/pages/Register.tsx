@@ -3,7 +3,7 @@ import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router';
 import InputField from '../components/InputField';
 import Layout from '../components/Layout';
-import { useRegisterMutation } from '../generated/graphql';
+import { MeDocument, MeQuery, useRegisterMutation } from '../generated/graphql';
 import { toErrorMap } from '../utils/toErrorMap';
 
 const Register = (): JSX.Element => {
@@ -16,6 +16,15 @@ const Register = (): JSX.Element => {
         onSubmit={async (values, { setErrors }) => {
           const response = await register({
             variables: { registerOptions: values },
+            update: (cache, { data }) => {
+              cache.writeQuery<MeQuery>({
+                query: MeDocument,
+                data: {
+                  __typename: 'Query',
+                  me: data?.register.user,
+                },
+              });
+            },
           });
           if (response.data?.register.errors) {
             setErrors(toErrorMap(response.data.register.errors));

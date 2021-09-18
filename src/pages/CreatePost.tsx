@@ -23,6 +23,9 @@ const CreatePost = (): JSX.Element => {
           console.log(values);
           const { errors } = await createPost({
             variables: { createPostInput: values },
+            update: (cache) => {
+              cache.evict({ fieldName: 'posts' });
+            },
           });
           console.log(errors);
           if (!errors) {

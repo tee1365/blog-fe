@@ -40,7 +40,7 @@ const Navbar = (): JSX.Element => {
         </Box>
         <Button
           onClick={async () => {
-            logout();
+            await logout();
             await apolloClient.resetStore();
           }}
           isLoading={logoutFetching}

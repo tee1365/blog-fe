@@ -4,7 +4,11 @@ import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import InputField from '../components/InputField';
 import Layout from '../components/Layout';
-import { useChangePasswordMutation } from '../generated/graphql';
+import {
+  MeDocument,
+  MeQuery,
+  useChangePasswordMutation,
+} from '../generated/graphql';
 import { toErrorMap } from '../utils/toErrorMap';
 import { useParamsQuery } from '../utils/useParamsQuery';
 
@@ -23,6 +27,15 @@ const ChangePassword = () => {
             variables: {
               newPassword: values.newPassword,
               token: typeof token === 'string' ? token : '',
+            },
+            update: (cache, { data }) => {
+              cache.writeQuery<MeQuery>({
+                query: MeDocument,
+                data: {
+                  __typename: 'Query',
+                  me: data?.changePassword.user,
+                },
+              });
             },
           });
           if (response.data?.changePassword.errors) {
