@@ -12,7 +12,7 @@ export const fetchImage = async () => {
     window.localStorage.setItem('image', image);
     dayjs.extend(dayOfYear);
     const day = dayjs().dayOfYear().toString();
-    window.localStorage.setItem('day', day);
+    window.localStorage.setItem('imageDay', day);
     return image;
   } catch (e) {
     console.log(e);
