@@ -9,7 +9,7 @@ import { toErrorMap } from '../utils/toErrorMap';
 import { useParamsQuery } from '../utils/useParamsQuery';
 
 const ChangePassword = () => {
-  const [, changePassword] = useChangePasswordMutation();
+  const [changePassword] = useChangePasswordMutation();
   const [tokenError, setTokenError] = useState('');
   const history = useHistory();
   const query = useParamsQuery();
@@ -20,8 +20,10 @@ const ChangePassword = () => {
         initialValues={{ newPassword: '' }}
         onSubmit={async (values, { setErrors }) => {
           const response = await changePassword({
-            newPassword: values.newPassword,
-            token: typeof token === 'string' ? token : '',
+            variables: {
+              newPassword: values.newPassword,
+              token: typeof token === 'string' ? token : '',
+            },
           });
           if (response.data?.changePassword.errors) {
             const errorMap = toErrorMap(response.data.changePassword.errors);

@@ -7,14 +7,16 @@ import { useRegisterMutation } from '../generated/graphql';
 import { toErrorMap } from '../utils/toErrorMap';
 
 const Register = (): JSX.Element => {
-  const [, register] = useRegisterMutation();
+  const [register] = useRegisterMutation();
   let history = useHistory();
   return (
     <Layout variant="small">
       <Formik
         initialValues={{ username: '', password: '', email: '' }}
         onSubmit={async (values, { setErrors }) => {
-          const response = await register({ registerOptions: values });
+          const response = await register({
+            variables: { registerOptions: values },
+          });
           if (response.data?.register.errors) {
             setErrors(toErrorMap(response.data.register.errors));
           } else if (response.data?.register.user) {

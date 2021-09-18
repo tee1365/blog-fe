@@ -1,3 +1,4 @@
+import { useApolloClient } from '@apollo/client';
 import { Box, Text } from '@chakra-ui/layout';
 import { Button, Flex } from '@chakra-ui/react';
 import { Link, useHistory } from 'react-router-dom';
@@ -8,12 +9,13 @@ import ImageBackground from './ImageBackground';
 const Navbar = (): JSX.Element => {
   const history = useHistory();
 
-  // cookie can only be fetched at browser
-  const [{ fetching, data }] = useMeQuery({ pause: isServer() });
-  const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
+  const { loading: loadingMe, data } = useMeQuery({ skip: isServer() });
+  const [logout, { loading: logoutFetching }] = useLogoutMutation();
+  const apolloClient = useApolloClient();
+
   let body = null;
 
-  if (fetching) {
+  if (loadingMe) {
     body = (
       <Box>
         <Button disabled>fetching</Button>
@@ -36,7 +38,13 @@ const Navbar = (): JSX.Element => {
         <Box mr={4} color="white">
           {data?.me?.username}
         </Box>
-        <Button onClick={() => logout()} isLoading={logoutFetching}>
+        <Button
+          onClick={async () => {
+            logout();
+            await apolloClient.resetStore();
+          }}
+          isLoading={logoutFetching}
+        >
           Logout
         </Button>
       </Flex>

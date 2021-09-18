@@ -9,7 +9,7 @@ import { useParamsQuery } from '../utils/useParamsQuery';
 import Layout from '../components/Layout';
 
 const Login = (): JSX.Element => {
-  const [, login] = useLoginMutation();
+  const [login] = useLoginMutation();
   const history = useHistory();
   const query = useParamsQuery();
   const next = query.get('next');
@@ -18,7 +18,7 @@ const Login = (): JSX.Element => {
       <Formik
         initialValues={{ usernameOrEmail: '', password: '' }}
         onSubmit={async (values, { setErrors }) => {
-          const response = await login(values);
+          const response = await login({ variables: values });
           if (response.data?.login.errors) {
             setErrors(toErrorMap(response.data.login.errors));
           } else if (response.data?.login.user) {

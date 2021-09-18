@@ -2,27 +2,48 @@ import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
-import { Provider } from 'urql';
 import App from './App';
 import theme from './theme';
-import { client } from './utils/createUrqlClient';
 import { createBrowserHistory } from 'history';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { PaginatedPosts } from './generated/graphql';
 
 export const history = createBrowserHistory();
 
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          posts: {
+            keyArgs: [],
+            merge(
+              existing: PaginatedPosts | undefined,
+              incoming: PaginatedPosts
+            ): PaginatedPosts {
+              return {
+                ...incoming,
+                posts: [...(existing?.posts || []), ...incoming.posts],
+              };
+            },
+          },
+        },
+      },
+    },
+  }),
+  credentials: 'include',
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider value={client}>
+    <ApolloProvider client={client}>
       <ChakraProvider resetCSS theme={theme}>
         <Router history={history}>
           <App />
         </Router>
       </ChakraProvider>
-    </Provider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

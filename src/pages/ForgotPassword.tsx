@@ -6,14 +6,14 @@ import Layout from '../components/Layout';
 import { useForgotPasswordMutation } from '../generated/graphql';
 
 const ForgotPassword = (): JSX.Element => {
-  const [, forgotPassword] = useForgotPasswordMutation();
+  const [forgotPassword] = useForgotPasswordMutation();
   const [complete, setComplete] = useState(false);
   return (
     <Layout variant="small">
       <Formik
         initialValues={{ email: '' }}
         onSubmit={async (values, { setErrors }) => {
-          await forgotPassword(values);
+          await forgotPassword({ variables: values });
           setComplete(true);
         }}
       >

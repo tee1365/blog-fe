@@ -10,7 +10,7 @@ import MDEditor from '@uiw/react-md-editor';
 import { Box } from '@chakra-ui/react';
 
 const CreatePost = (): JSX.Element => {
-  const [, createPost] = useCreatePostMutation();
+  const [createPost] = useCreatePostMutation();
   const [value, setValue] = useState('');
   const history = useHistory();
   useIsAuth();
@@ -21,9 +21,11 @@ const CreatePost = (): JSX.Element => {
         onSubmit={async (values) => {
           values.text = value;
           console.log(values);
-          const { error } = await createPost({ createPostInput: values });
-          console.log(error);
-          if (!error) {
+          const { errors } = await createPost({
+            variables: { createPostInput: values },
+          });
+          console.log(errors);
+          if (!errors) {
             history.push('/home');
           }
         }}
