@@ -136,3 +136,5 @@ how to get the types of the actions in slice?
       ```
 
 4. 安装apollo
+
+现在重置密码不好用，创建新post需要手动刷新。
