@@ -1,12 +1,14 @@
 import { Heading, Box } from '@chakra-ui/react';
 import { ReactNode } from 'react';
+import { useParams } from 'react-router';
 import Layout from '../components/Layout';
 import { usePostQuery } from '../generated/graphql';
-import { useParamsQuery } from '../utils/useParamsQuery';
 
 const Post = () => {
-  const id = useParamsQuery().get('id');
+  const { id } = useParams<{ id: string }>();
   const intId = typeof id === 'string' ? +id : -1;
+  // const intId = -1;
+
   const { data, loading, error } = usePostQuery({
     variables: {
       postId: intId,
