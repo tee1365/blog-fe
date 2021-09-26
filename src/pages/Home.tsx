@@ -1,14 +1,17 @@
 import { Box, VStack, Text } from '@chakra-ui/layout';
 import { Button, Flex, Heading, LinkBox, LinkOverlay } from '@chakra-ui/react';
 import MDEditor from '@uiw/react-md-editor';
+import { useHistory } from 'react-router';
 import Layout from '../components/Layout';
 import { usePostsQuery } from '../generated/graphql';
 
 const Home = (): JSX.Element => {
   const { data, loading, fetchMore, variables } = usePostsQuery({
-    variables: { postsLimit: 3, postsCursor: null },
+    variables: { postsLimit: 5, postsCursor: null },
     notifyOnNetworkStatusChange: true,
   });
+
+  const history = useHistory();
 
   if (!loading && !data) {
     return <Text>no post to display or query failed</Text>;
@@ -27,6 +30,7 @@ const Home = (): JSX.Element => {
                 rounded="md"
                 width="100%"
                 key={p.id}
+                onClick={() => history.push('/post/' + p.id)}
               >
                 <Box as="time" dateTime="2021-01-15 15:30:00 +0000 UTC">
                   {new Date(+p.createdAt).toLocaleString('en-NZ')}

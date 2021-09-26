@@ -4,6 +4,7 @@ import CreatePost from './pages/CreatePost';
 import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Post from './pages/Post';
 import Register from './pages/Register';
 import Welcome from './pages/Welcome';
 
@@ -17,6 +18,7 @@ function App() {
       <Route path="/forgotPassword" component={ForgotPassword} />
       <Route path="/createPost" component={CreatePost} />
       <Route path="/changePassword/:token" component={ChangePassword} />
+      <Route path="/post/:id" component={Post} />
     </>
   );
 }

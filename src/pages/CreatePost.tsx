@@ -27,7 +27,6 @@ const CreatePost = (): JSX.Element => {
               cache.evict({ fieldName: 'posts' });
             },
           });
-          console.log(errors);
           if (!errors) {
             history.push('/home');
           }
