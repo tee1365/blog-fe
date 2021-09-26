@@ -8,7 +8,6 @@ export const useIsAuth = () => {
   const location = useLocation();
   useEffect(() => {
     if (!loading && !data?.me) {
-      // history.replace('/login?next=' + router.pathname);
       history.replace('/login?next=' + location.pathname);
     }
   }, [data, loading, location.pathname]);
