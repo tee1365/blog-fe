@@ -44,8 +44,10 @@ const Home = (): JSX.Element => {
                 <Heading size="md" my="2">
                   <Link to={'/post/' + p.id}> {p.title}</Link>
                 </Heading>
-                <Flex>
-                  <MDEditor.Markdown source={p.textSnippet} />
+                <Flex align="center">
+                  <Box flex={1}>
+                    <MDEditor.Markdown source={p.textSnippet} />
+                  </Box>
                   {p.creator.id === me?.me?.id ? (
                     <IconButton
                       icon={<DeleteIcon />}
