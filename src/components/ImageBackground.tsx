@@ -12,7 +12,9 @@ const ImageBackground = ({
   height = '100vh',
   ...boxProps
 }: ImageBackgroundProps): JSX.Element => {
-  let image = window.localStorage.getItem('image') || '';
+  let image =
+    window.localStorage.getItem('image') ||
+    'https://images.unsplash.com/photo-1632213702844-1e0615781374?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNjQ4MDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MzI2Njg0Mjc&ixlib=rb-1.2.1&q=85';
 
   useEffect(() => {
     (async () => {

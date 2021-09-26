@@ -7,7 +7,6 @@ import { usePostQuery } from '../generated/graphql';
 const Post = () => {
   const { id } = useParams<{ id: string }>();
   const intId = typeof id === 'string' ? +id : -1;
-  // const intId = -1;
 
   const { data, loading, error } = usePostQuery({
     variables: {

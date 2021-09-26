@@ -1,9 +1,14 @@
+import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, VStack, Text } from '@chakra-ui/layout';
-import { Button, Flex, Heading, LinkBox, LinkOverlay } from '@chakra-ui/react';
+import { Button, Flex, Heading, IconButton } from '@chakra-ui/react';
 import MDEditor from '@uiw/react-md-editor';
-import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
-import { usePostsQuery } from '../generated/graphql';
+import {
+  useDeletePostMutation,
+  useMeQuery,
+  usePostsQuery,
+} from '../generated/graphql';
 
 const Home = (): JSX.Element => {
   const { data, loading, fetchMore, variables } = usePostsQuery({
@@ -11,7 +16,9 @@ const Home = (): JSX.Element => {
     notifyOnNetworkStatusChange: true,
   });
 
-  const history = useHistory();
+  const { data: me } = useMeQuery();
+
+  const [deletePost] = useDeletePostMutation();
 
   if (!loading && !data) {
     return <Text>no post to display or query failed</Text>;
@@ -23,23 +30,40 @@ const Home = (): JSX.Element => {
         {typeof data === 'undefined'
           ? null
           : data.posts.posts.map((p) => (
-              <LinkBox
+              <Box
                 as="article"
                 p="5"
                 borderWidth="1px"
                 rounded="md"
                 width="100%"
                 key={p.id}
-                onClick={() => history.push('/post/' + p.id)}
               >
                 <Box as="time" dateTime="2021-01-15 15:30:00 +0000 UTC">
                   {new Date(+p.createdAt).toLocaleString('en-NZ')}
                 </Box>
                 <Heading size="md" my="2">
-                  <LinkOverlay href="#">{p.title}</LinkOverlay>
+                  <Link to={'/post/' + p.id}> {p.title}</Link>
                 </Heading>
-                <MDEditor.Markdown source={p.textSnippet} />
-              </LinkBox>
+                <Flex>
+                  <MDEditor.Markdown source={p.textSnippet} />
+                  {p.creator.id === me?.me?.id ? (
+                    <IconButton
+                      icon={<DeleteIcon />}
+                      aria-label="delete-post"
+                      onClick={() => {
+                        deletePost({
+                          variables: {
+                            deletePostId: p.id,
+                          },
+                          update: (cache) => {
+                            cache.evict({ fieldName: 'posts' });
+                          },
+                        });
+                      }}
+                    ></IconButton>
+                  ) : null}
+                </Flex>
+              </Box>
             ))}
       </VStack>
       {data && !loading && data.posts.hasMore ? (

@@ -65,13 +65,8 @@ const Navbar = (): JSX.Element => {
         {body}
       </Flex>
       <Flex justifyContent="center" mt="auto">
-        <Text
-          fontSize="6xl"
-          color="white"
-          mb={12}
-          onClick={() => history.push('/home')}
-        >
-          Justin's Blog
+        <Text fontSize="6xl" color="white" mb={12}>
+          <Link to="/home">Justin's Blog</Link>
         </Text>
       </Flex>
     </ImageBackground>
