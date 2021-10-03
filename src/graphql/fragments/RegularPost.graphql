@@ -3,5 +3,4 @@ fragment RegularPosts on Post {
   title
   creatorId
   text
-  points
 }

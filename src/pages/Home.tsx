@@ -15,6 +15,7 @@ const Home = (): JSX.Element => {
     variables: { postsLimit: 5, postsCursor: null },
     notifyOnNetworkStatusChange: true,
   });
+  console.log(data);
 
   const { data: me } = useMeQuery();
 

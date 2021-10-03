@@ -1,0 +1,12 @@
+mutation CreateComment(
+  $createCommentPostId: Float!
+  $createCommentText: String!
+) {
+  createComment(postId: $createCommentPostId, text: $createCommentText) {
+    id
+    createdAt
+    creatorId
+    postId
+    text
+  }
+}

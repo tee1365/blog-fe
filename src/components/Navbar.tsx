@@ -1,14 +1,12 @@
 import { useApolloClient } from '@apollo/client';
 import { Box, Text } from '@chakra-ui/layout';
 import { Button, Flex } from '@chakra-ui/react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import { isServer } from '../utils/isServer';
 import ImageBackground from './ImageBackground';
 
 const Navbar = (): JSX.Element => {
-  const history = useHistory();
-
   const { loading: loadingMe, data } = useMeQuery({ skip: isServer() });
   const [logout, { loading: logoutFetching }] = useLogoutMutation();
   const apolloClient = useApolloClient();
