@@ -1,0 +1,14 @@
+query getComments($commentsPostId: Float!) {
+  comments(postId: $commentsPostId) {
+    id
+    createdAt
+    creatorId
+    postId
+    text
+    creator {
+      username
+      id
+      email
+    }
+  }
+}

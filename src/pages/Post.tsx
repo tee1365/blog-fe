@@ -1,13 +1,25 @@
-import { Heading, Box, Textarea, Button, Flex } from '@chakra-ui/react';
+import {
+  Heading,
+  Box,
+  Textarea,
+  Button,
+  Flex,
+  VStack,
+  Text,
+} from '@chakra-ui/react';
+import MDEditor from '@uiw/react-md-editor';
 import { ReactNode, useState } from 'react';
-import { useHistory, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import Layout from '../components/Layout';
-import { useCreateCommentMutation, usePostQuery } from '../generated/graphql';
+import {
+  useCreateCommentMutation,
+  useGetCommentsQuery,
+  usePostQuery,
+} from '../generated/graphql';
 
 const Post = () => {
   const { id } = useParams<{ id: string }>();
   const intId = typeof id === 'string' ? +id : -1;
-  const history = useHistory();
   const [value, setValue] = useState('');
 
   const { data, loading, error } = usePostQuery({
@@ -15,6 +27,10 @@ const Post = () => {
       postId: intId,
     },
     skip: intId === -1,
+  });
+
+  const { data: comments } = useGetCommentsQuery({
+    variables: { commentsPostId: intId },
   });
 
   const [createComment] = useCreateCommentMutation();
@@ -35,14 +51,18 @@ const Post = () => {
   } else {
     body = (
       <>
-        <Heading mb={4}>{data.post.title}</Heading>
-        {data.post.text}
+        <Box as="article" p="5" borderWidth="1px" rounded="md" width="100%">
+          {/* <Heading mb={4}>{data.post.title}</Heading> */}
+          <MDEditor.Markdown source={data.post.text} />
+        </Box>
+
         <Textarea
           mt={8}
           placeholder="Comment..."
           value={value}
           onChange={handleInputChange}
         />
+
         <Flex flexDir="row-reverse">
           <Button
             mt={4}
@@ -56,14 +76,31 @@ const Post = () => {
                   cache.evict({ fieldName: 'comments' });
                 },
               });
-              // if (!errors) {
-              //   history.push('/home');
-              // }
+              setValue('');
+              console.log(errors);
             }}
           >
             Submit
           </Button>
         </Flex>
+
+        <VStack my={8} spacing={4}>
+          {typeof comments === 'undefined'
+            ? null
+            : comments.comments.map((comment) => (
+                <Box
+                  as="article"
+                  p="5"
+                  borderWidth="1px"
+                  rounded="md"
+                  width="100%"
+                  key={comment.id}
+                >
+                  <Text fontWeight="bold">{comment.creator.username}</Text>
+                  <Text>{comment.text}</Text>
+                </Box>
+              ))}
+        </VStack>
       </>
     );
   }

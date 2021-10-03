@@ -61,11 +61,17 @@ const ChangePassword = () => {
               <Flex justifyContent="space-between">
                 <Box color="red">{tokenError}</Box>
                 <Link to="/forgotPassword">
-                  <Button>Go forget page</Button>
+                  <Button colorScheme="blackAlpha">Go forget page</Button>
                 </Link>
               </Flex>
             ) : null}
-            <Button type="submit" color="teal" mt={4} isLoading={isSubmitting}>
+            <Button
+              colorScheme="blackAlpha"
+              type="submit"
+              color="teal"
+              mt={4}
+              isLoading={isSubmitting}
+            >
               Confirm
             </Button>
           </Form>

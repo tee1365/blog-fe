@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router';
 import InputField from '../components/InputField';
@@ -51,9 +51,11 @@ const Register = (): JSX.Element => {
               label="Password"
               type="password"
             ></InputField>
-            <Button type="submit" color="teal" mt={4} isLoading={isSubmitting}>
-              Register
-            </Button>
+            <Flex flexDir="row-reverse" mt={8}>
+              <Button type="submit" isLoading={isSubmitting}>
+                Register
+              </Button>
+            </Flex>
           </Form>
         )}
       </Formik>

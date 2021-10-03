@@ -16,17 +16,21 @@ const Navbar = (): JSX.Element => {
   if (loadingMe) {
     body = (
       <Box>
-        <Button disabled>fetching</Button>
+        <Button disabled colorScheme="blackAlpha">
+          fetching
+        </Button>
       </Box>
     );
   } else if (!data?.me) {
     body = (
       <Box>
         <Link to="/login">
-          <Button mr={4}>Login</Button>
+          <Button colorScheme="blackAlpha" mr={4}>
+            Login
+          </Button>
         </Link>
         <Link to="/register">
-          <Button>Register</Button>
+          <Button colorScheme="blackAlpha">Register</Button>
         </Link>
       </Box>
     );
@@ -37,6 +41,7 @@ const Navbar = (): JSX.Element => {
           {data?.me?.username}
         </Box>
         <Button
+          colorScheme="blackAlpha"
           onClick={async () => {
             await logout();
             await apolloClient.resetStore();

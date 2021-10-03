@@ -15,7 +15,7 @@ const Welcome = (): JSX.Element => {
         Justin's Blog
       </Text>
       <Link to="/home">
-        <Button>Enter</Button>
+        <Button size="lg">Enter</Button>
       </Link>
     </ImageBackground>
   );

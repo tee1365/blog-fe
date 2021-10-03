@@ -1,4 +1,4 @@
-import { Button, Box } from '@chakra-ui/react';
+import { Button, Box, Flex } from '@chakra-ui/react';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import InputField from '../components/InputField';
@@ -30,14 +30,11 @@ const ForgotPassword = (): JSX.Element => {
                 label="Email"
                 type="email"
               ></InputField>
-              <Button
-                type="submit"
-                color="teal"
-                mt={4}
-                isLoading={isSubmitting}
-              >
-                Submit
-              </Button>
+              <Flex flexDir="row-reverse" mt={8}>
+                <Button type="submit" mt={4} isLoading={isSubmitting}>
+                  Submit
+                </Button>
+              </Flex>
             </Form>
           )
         }

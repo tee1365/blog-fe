@@ -7,7 +7,7 @@ import { useIsAuth } from '../utils/useIsAuth';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 
 const CreatePost = (): JSX.Element => {
   const [createPost] = useCreatePostMutation();
@@ -15,7 +15,7 @@ const CreatePost = (): JSX.Element => {
   const history = useHistory();
   useIsAuth();
   return (
-    <Layout variant="small">
+    <Layout variant="regular">
       <Formik
         initialValues={{ title: '', text: '' }}
         onSubmit={async (values) => {
@@ -49,11 +49,17 @@ const CreatePost = (): JSX.Element => {
                     setValue('');
                   }
                 }}
+                height={800}
               />
             </Box>
-            <Button type="submit" color="teal" mt={4} isLoading={isSubmitting}>
-              Create
-            </Button>
+            <Flex flexDir="row-reverse" my={8}>
+              <Button
+                type="submit"
+                isLoading={isSubmitting}
+              >
+                Create
+              </Button>
+            </Flex>
           </Form>
         )}
       </Formik>

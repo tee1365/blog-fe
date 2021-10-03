@@ -56,14 +56,19 @@ const Login = (): JSX.Element => {
               label="Password"
               type="password"
             ></InputField>
-            <Flex direction="row-reverse" mt={2}>
+            <Flex
+              direction="row-reverse"
+              mt={8}
+              justifyContent="space-between"
+              align="center"
+            >
+              <Button type="submit" isLoading={isSubmitting}>
+                Login
+              </Button>
               <Link to="/forgotPassword">
-                <Button>forgot password?</Button>
+                <Button>Forgot Password?</Button>
               </Link>
             </Flex>
-            <Button type="submit" color="teal" mt={4} isLoading={isSubmitting}>
-              Login
-            </Button>
           </Form>
         )}
       </Formik>

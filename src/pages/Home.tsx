@@ -1,7 +1,6 @@
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, VStack, Text } from '@chakra-ui/layout';
 import { Button, Flex, Heading, IconButton } from '@chakra-ui/react';
-import MDEditor from '@uiw/react-md-editor';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import {
@@ -15,7 +14,6 @@ const Home = (): JSX.Element => {
     variables: { postsLimit: 5, postsCursor: null },
     notifyOnNetworkStatusChange: true,
   });
-  console.log(data);
 
   const { data: me } = useMeQuery();
 
@@ -26,7 +24,7 @@ const Home = (): JSX.Element => {
   }
 
   return (
-    <Layout add={true}>
+    <Layout add={true} variant="small">
       <VStack mt={2} spacing={3}>
         {typeof data === 'undefined'
           ? null
@@ -42,15 +40,13 @@ const Home = (): JSX.Element => {
                 <Box as="time" dateTime="2021-01-15 15:30:00 +0000 UTC">
                   {new Date(+p.createdAt).toLocaleString('en-NZ')}
                 </Box>
-                <Heading size="md" my="2">
-                  <Link to={'/post/' + p.id}> {p.title}</Link>
-                </Heading>
-                <Flex align="center">
-                  <Box flex={1}>
-                    <MDEditor.Markdown source={p.textSnippet} />
-                  </Box>
+                <Flex align="center" justifyContent="space-between">
+                  <Heading my="2" size="lg">
+                    <Link to={'/post/' + p.id}>{p.title}</Link>
+                  </Heading>
                   {p.creator.id === me?.me?.id ? (
                     <IconButton
+                      ml={8}
                       icon={<DeleteIcon />}
                       aria-label="delete-post"
                       onClick={() => {

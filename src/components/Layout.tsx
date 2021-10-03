@@ -1,4 +1,5 @@
-import { Box, Button } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
+import { Box, IconButton } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
@@ -22,7 +23,13 @@ const Layout = ({
       {add ? (
         <Box position="fixed" right="10vh" bottom="10vh">
           <Link to="/createPost">
-            <Button>add</Button>
+            <IconButton
+              aria-label="add-post"
+              isRound={true}
+              icon={<AddIcon />}
+              size="lg"
+              colorScheme="blackAlpha"
+            ></IconButton>
           </Link>
         </Box>
       ) : null}

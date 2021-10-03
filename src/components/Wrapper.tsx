@@ -13,12 +13,7 @@ const Wrapper = ({
   variant = 'regular',
 }: WrapperProps): JSX.Element => {
   return (
-    <Box
-      maxW={variant === 'regular' ? '800px' : '400px'}
-      w="100%"
-      mt={8}
-      mx="auto"
-    >
+    <Box maxW={variant === 'regular' ? '75%' : '45%'} w="100%" mt={8} mx="auto">
       {children}
     </Box>
   );
