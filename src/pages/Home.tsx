@@ -37,7 +37,7 @@ const Home = (): JSX.Element => {
                 width="100%"
                 key={p.id}
               >
-                <Box as="time" dateTime="2021-01-15 15:30:00 +0000 UTC">
+                <Box as="time">
                   {new Date(+p.createdAt).toLocaleString('en-NZ')}
                 </Box>
                 <Flex align="center" justifyContent="space-between">

@@ -3,11 +3,10 @@ import { Box, Text } from '@chakra-ui/layout';
 import { Button, Flex } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
-import { isServer } from '../utils/isServer';
 import ImageBackground from './ImageBackground';
 
 const Navbar = (): JSX.Element => {
-  const { loading: loadingMe, data } = useMeQuery({ skip: isServer() });
+  const { loading: loadingMe, data } = useMeQuery();
   const [logout, { loading: logoutFetching }] = useLogoutMutation();
   const apolloClient = useApolloClient();
 

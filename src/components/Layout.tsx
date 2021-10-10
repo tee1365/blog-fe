@@ -1,11 +1,11 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { Box, IconButton } from '@chakra-ui/react';
+import { Box, BoxProps, IconButton } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Wrapper, { WrapperVariant } from './Wrapper';
 
-interface LayoutProps {
+interface LayoutProps extends BoxProps {
   add?: boolean;
   variant?: WrapperVariant;
   children: ReactNode;

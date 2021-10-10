@@ -1,12 +1,4 @@
-import {
-  Heading,
-  Box,
-  Textarea,
-  Button,
-  Flex,
-  VStack,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Textarea, Button, Flex, VStack, Text } from '@chakra-ui/react';
 import MDEditor from '@uiw/react-md-editor';
 import { ReactNode, useState } from 'react';
 import { useParams } from 'react-router';
@@ -52,7 +44,6 @@ const Post = () => {
     body = (
       <>
         <Box as="article" p="5" borderWidth="1px" rounded="md" width="100%">
-          {/* <Heading mb={4}>{data.post.title}</Heading> */}
           <MDEditor.Markdown source={data.post.text} />
         </Box>
 
