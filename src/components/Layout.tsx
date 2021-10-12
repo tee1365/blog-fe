@@ -2,6 +2,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { Box, BoxProps, IconButton } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { useMeQuery } from '../generated/graphql';
 import Navbar from './Navbar';
 import Wrapper, { WrapperVariant } from './Wrapper';
 
@@ -16,11 +17,13 @@ const Layout = ({
   variant = 'regular',
   add = false,
 }: LayoutProps): JSX.Element => {
+  const { data } = useMeQuery();
+  const isAdmin = data?.me?.isAdmin;
   return (
     <>
       <Navbar></Navbar>
       <Wrapper variant={variant}>{children}</Wrapper>
-      {add ? (
+      {add && isAdmin ? (
         <Box position="fixed" right="10vh" bottom="10vh">
           <Link to="/createPost">
             <IconButton

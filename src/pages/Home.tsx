@@ -44,7 +44,7 @@ const Home = (): JSX.Element => {
                   <Heading my="2" size="lg">
                     <Link to={'/post/' + p.id}>{p.title}</Link>
                   </Heading>
-                  {p.creator.id === me?.me?.id ? (
+                  {me?.me?.isAdmin ? (
                     <IconButton
                       ml={8}
                       icon={<DeleteIcon />}

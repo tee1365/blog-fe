@@ -141,6 +141,7 @@ export type User = {
   createdAt: Scalars['String'];
   email: Scalars['String'];
   id: Scalars['Float'];
+  isAdmin: Scalars['Boolean'];
   updatedAt: Scalars['String'];
   username: Scalars['String'];
 };
@@ -161,9 +162,9 @@ export type RegularErrorFragment = { __typename?: 'FieldError', field: string, m
 
 export type RegularPostsFragment = { __typename?: 'Post', id: number, title: string, creatorId: number, text: string };
 
-export type RegularUserFragment = { __typename?: 'User', id: number, username: string, email: string };
+export type RegularUserFragment = { __typename?: 'User', id: number, username: string, email: string, isAdmin: boolean };
 
-export type RegularUserResponseFragment = { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string }> };
+export type RegularUserResponseFragment = { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string, isAdmin: boolean }> };
 
 export type ChangePasswordMutationVariables = Exact<{
   newPassword: Scalars['String'];
@@ -171,7 +172,7 @@ export type ChangePasswordMutationVariables = Exact<{
 }>;
 
 
-export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string }> } };
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string, isAdmin: boolean }> } };
 
 export type CreateCommentMutationVariables = Exact<{
   createCommentPostId: Scalars['Float'];
@@ -208,7 +209,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string }> } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string, isAdmin: boolean }> } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -220,7 +221,7 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string }> } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string, isAdmin: boolean }> } };
 
 export type GetCommentsQueryVariables = Exact<{
   commentsPostId: Scalars['Float'];
@@ -232,7 +233,7 @@ export type GetCommentsQuery = { __typename?: 'Query', comments: Array<{ __typen
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: number, username: string, email: string }> };
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: number, username: string, email: string, isAdmin: boolean }> };
 
 export type PostQueryVariables = Exact<{
   postId: Scalars['Float'];
@@ -268,6 +269,7 @@ export const RegularUserFragmentDoc = gql`
   id
   username
   email
+  isAdmin
 }
     `;
 export const RegularUserResponseFragmentDoc = gql`
