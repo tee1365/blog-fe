@@ -11,7 +11,7 @@ import {
 
 const Home = (): JSX.Element => {
   const { data, loading, fetchMore, variables } = usePostsQuery({
-    variables: { postsLimit: 5, postsCursor: null },
+    variables: { postsLimit: 2, postsCursor: null },
     notifyOnNetworkStatusChange: true,
   });
 
