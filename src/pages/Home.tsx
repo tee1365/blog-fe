@@ -19,9 +19,9 @@ const Home = (): JSX.Element => {
 
   const [deletePost] = useDeletePostMutation();
 
-  if (!loading && !data) {
-    return <Text>no post to display or query failed</Text>;
-  }
+  // if (!loading && !data) {
+  //   return <Text>no post to display or query failed</Text>;
+  // }
 
   return (
     <Layout add={true} variant="small">

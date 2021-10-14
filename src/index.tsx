@@ -11,7 +11,10 @@ import { PaginatedPosts } from './generated/graphql';
 export const history = createBrowserHistory();
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  uri:
+    process.env.NODE_ENV === 'production'
+      ? 'http://localhost:4000/graphql'
+      : 'http://localhost:4000/graphql',
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
