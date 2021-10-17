@@ -1,5 +1,5 @@
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Box, VStack, Text } from '@chakra-ui/layout';
+import { Box, VStack } from '@chakra-ui/layout';
 import { Button, Flex, Heading, IconButton } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
