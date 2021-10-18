@@ -12,6 +12,8 @@ interface LayoutProps extends BoxProps {
   children: ReactNode;
 }
 
+// this component set the basic layout of the application.
+
 const Layout = ({
   children,
   variant = 'regular',

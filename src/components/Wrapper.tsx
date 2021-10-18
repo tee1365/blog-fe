@@ -8,6 +8,8 @@ interface WrapperProps {
   children: ReactNode;
 }
 
+// this component set the max width of non-header components.
+
 const Wrapper = ({
   children,
   variant = 'regular',

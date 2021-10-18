@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import ImageBackground from './ImageBackground';
 
+// this is the header component. Since the user authentication have multiple states, 
+// I use a if statement to determine the changable part.
+
 const Navbar = (): JSX.Element => {
   const { loading: loadingMe, data } = useMeQuery();
   const [logout, { loading: logoutFetching }] = useLogoutMutation();

@@ -28,6 +28,7 @@ const ChangePassword = () => {
               newPassword: values.newPassword,
               token: typeof token === 'string' ? token : '',
             },
+            // update local cache
             update: (cache, { data }) => {
               cache.writeQuery<MeQuery>({
                 query: MeDocument,

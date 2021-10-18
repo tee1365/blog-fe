@@ -19,6 +19,7 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
+          // used for pagination
           posts: {
             keyArgs: [],
             merge(

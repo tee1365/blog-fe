@@ -2,6 +2,9 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
 
+// this function is used to fetch new image. It fetches an image from unsplash 
+// and then store the url into localstroage. In addition, it also stores today's date into localstroage.
+
 export const fetchImage = async () => {
   try {
     const imageObj: any = await axios.get(

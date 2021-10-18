@@ -12,6 +12,8 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
 }
 
+// this component is used as an universal form field component.
+
 const InputField = ({
   label,
   size: _,
