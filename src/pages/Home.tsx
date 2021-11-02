@@ -1,7 +1,7 @@
-import { DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, VStack } from '@chakra-ui/layout';
 import { Button, Flex, Heading, IconButton } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Layout from '../components/Layout';
 import {
   useDeletePostMutation,
@@ -14,6 +14,7 @@ const Home = (): JSX.Element => {
     variables: { postsLimit: 2, postsCursor: null },
     notifyOnNetworkStatusChange: true,
   });
+  const history = useHistory();
 
   const { data: me } = useMeQuery();
 
@@ -41,21 +42,29 @@ const Home = (): JSX.Element => {
                     <Link to={'/post/' + p.id}>{p.title}</Link>
                   </Heading>
                   {me?.me?.isAdmin ? (
-                    <IconButton
-                      ml={8}
-                      icon={<DeleteIcon />}
-                      aria-label="delete-post"
-                      onClick={() => {
-                        deletePost({
-                          variables: {
-                            deletePostId: p.id,
-                          },
-                          update: (cache) => {
-                            cache.evict({ fieldName: 'posts' });
-                          },
-                        });
-                      }}
-                    ></IconButton>
+                    <Box>
+                      <IconButton
+                        ml={8}
+                        icon={<EditIcon />}
+                        aria-label="edit-post"
+                        onClick={() => history.push('/edit/' + p.id)}
+                      ></IconButton>
+                      <IconButton
+                        ml={8}
+                        icon={<DeleteIcon />}
+                        aria-label="delete-post"
+                        onClick={() => {
+                          deletePost({
+                            variables: {
+                              deletePostId: p.id,
+                            },
+                            update: (cache) => {
+                              cache.evict({ fieldName: 'posts' });
+                            },
+                          });
+                        }}
+                      ></IconButton>
+                    </Box>
                   ) : null}
                 </Flex>
               </Box>

@@ -1,0 +1,22 @@
+mutation UpdatePost(
+  $updatePostText: String!
+  $updatePostId: Float!
+  $updatePostTitle: String!
+) {
+  updatePost(
+    text: $updatePostText
+    id: $updatePostId
+    title: $updatePostTitle
+  ) {
+    id
+    updatedAt
+    createdAt
+    title
+    creatorId
+    creator {
+      username
+      id
+    }
+    text
+  }
+}

@@ -1,30 +1,50 @@
 import { Button } from '@chakra-ui/button';
 import { Formik, Form } from 'formik';
 import InputField from '../components/InputField';
-import { useCreatePostMutation } from '../generated/graphql';
+import { usePostQuery, useUpdatePostMutation } from '../generated/graphql';
 import Layout from '../components/Layout';
 import { useIsAuth } from '../utils/useIsAuth';
 import { useHistory } from 'react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { Box, Flex } from '@chakra-ui/react';
+import { useParams } from 'react-router-dom';
 import { PostFormInitialStateType } from '../types';
 
-const CreatePost = (): JSX.Element => {
-  const [createPost] = useCreatePostMutation();
-  const [value, setValue] = useState('');
+const EditPost = (): JSX.Element => {
+  const { id } = useParams<{ id: string }>();
+  const intId = typeof id === 'string' ? +id : -1;
+  const [editPost] = useUpdatePostMutation();
+  const { data } = usePostQuery({
+    variables: {
+      postId: intId,
+    },
+    skip: intId === -1,
+  });
+  const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
+
   const history = useHistory();
-  const initialValues: PostFormInitialStateType = { title: '', text: '' };
+
+  useEffect(() => {
+    if (data?.post) {
+      setText(data.post.text);
+      setTitle(data.post.title);
+    }
+  }, [data]);
+
   useIsAuth();
   return (
     <Layout variant="regular">
       <Formik
-        initialValues={initialValues}
-        onSubmit={async (values) => {
-          values.text = value;
-          console.log(values);
-          const { errors } = await createPost({
-            variables: { createPostInput: values },
+        initialValues={{ text, title }}
+        onSubmit={async () => {
+          const { errors } = await editPost({
+            variables: {
+              updatePostId: intId,
+              updatePostText: text,
+              updatePostTitle: title,
+            },
             update: (cache) => {
               cache.evict({ fieldName: 'posts' });
             },
@@ -40,15 +60,19 @@ const CreatePost = (): JSX.Element => {
               name="title"
               placeholder="title"
               label="Title"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
             ></InputField>
             <Box mt={4}>
               <MDEditor
-                value={value}
+                value={text}
                 onChange={(value) => {
                   if (value) {
-                    setValue(value);
+                    setText(value);
                   } else {
-                    setValue('');
+                    setText('');
                   }
                 }}
                 height={800}
@@ -56,7 +80,7 @@ const CreatePost = (): JSX.Element => {
             </Box>
             <Flex flexDir="row-reverse" my={8}>
               <Button type="submit" isLoading={isSubmitting}>
-                Create
+                Confirm
               </Button>
             </Flex>
           </Form>
@@ -66,4 +90,4 @@ const CreatePost = (): JSX.Element => {
   );
 };
 
-export default CreatePost;
+export default EditPost;

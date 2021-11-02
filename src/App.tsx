@@ -1,6 +1,7 @@
 import { Route } from 'react-router-dom';
 import ChangePassword from './pages/ChangePassword';
 import CreatePost from './pages/CreatePost';
+import EditPost from './pages/EditPost';
 import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -19,6 +20,7 @@ function App() {
       <Route path="/createPost" component={CreatePost} />
       <Route path="/changePassword/:token" component={ChangePassword} />
       <Route path="/post/:id" component={Post} />
+      <Route path="/edit/:id" component={EditPost} />
     </>
   );
 }
